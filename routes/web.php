@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\UpdateProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'index');
@@ -14,5 +16,7 @@ Route::post('/login', LoginController::class);
 
 Route::middleware('auth')->group(function(){
   Route::view('/profile', 'auth.profile')->name('profile');
+  Route::put('/profile', UpdateProfileController::class)->name('update.profile');
+  Route::post('/change-password', ChangePasswordController::class)->name('change.password');
   Route::post('/logout', LogoutController::class)->name('logout');
 });

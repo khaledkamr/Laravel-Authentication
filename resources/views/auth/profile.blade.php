@@ -3,41 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Profile Page</title>
-    <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
+  <title>Edit Profile</title>
+  <link rel="shortcut icon" href="{{ asset('favicon.png') }}" type="image/png">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-900 text-white mt-20 flex justify-center p-6 flex-col items-center">
-    @session('success')
-        <div class="bg-green-600 bg-opacity-20 border border-green-500 text-green-200 px-4 py-3 rounded-md mx-6 mt-6 mb-6 flex items-center space-x-2">
-            <svg class="w-5 h-5 text-green-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
-            </svg>
-            <span class="font-medium">{{ session('success') }}</span>
-        </div>
-    @endsession
-  <div class="max-w-2xl w-full bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-    <!-- Profile Header -->
-    <div class="p-8 bg-gray-700 flex flex-col sm:flex-row items-center gap-8">
-      <img src="{{ asset('imgs/profile.png') }}" alt="Profile Picture" class="w-28 h-28 rounded-full border-4 border-gray-600 shadow-lg object-cover">
-      <div class="flex-1 w-full">
-        <ul class="space-y-2 mb-6">
-          <li>
-            <h2 class="text-3xl font-extrabold tracking-tight">{{ auth()->user()->name }}</h2>
+<body class="bg-gray-900 text-gray-200">
+  <div class="mx-auto px-12 mt-10">
+    <div class="flex justify-between align-center">
+      <h1 class="text-3xl font-bold mb-6">Edit Profile</h1>
+      <form action="{{route('logout')}}" method="post">
+        @csrf
+        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Logout</button>
+      </form>
+    </div>
+
+    @if(session('success'))
+        <div class="bg-green-500 text-white p-4 rounded mb-4">{{ session('success') }}</div>
+    @endif
+
+    @if(session('error'))
+        <div class="bg-red-500 text-white p-4 rounded mb-4">{{ session('error') }}</div>
+    @endif
+
+    <div class="bg-gray-800 rounded-lg shadow-md mb-4">
+      <div class="text-sm font-medium text-center text-gray-500 border-gray-700">
+        <ul class="flex flex-wrap -mb-px">
+          <li class="me-2">
+            <a href="#" onclick="showTab('profileTab')" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-400 hover:border-gray-600 dark:hover:text-gray-300">Profile</a>
           </li>
-          <li>
-            <span class="font-semibold text-gray-300">Email:</span>
-            <span class="text-gray-100">{{ auth()->user()->email }}</span>
+          <li class="me-2">
+            <a href="#" onclick="showTab('passwordTab')" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-400 hover:border-gray-600 dark:hover:text-gray-300">Change Password</a>
           </li>
         </ul>
-        <form action="{{ route('logout') }}" method="POST" class="flex justify-start">
+      </div>
+  </div>
+
+    <div class="bg-gray-800 rounded-lg shadow-md p-4">
+      <div id="profileTab" class="tab-content">
+          <h2 class="text-xl font-semibold mb-4">Update Profile</h2>
+          <form action="" method="POST" class="mb-6">
+            @csrf
+            @method('put')
+            <div class="mb-4">
+              <label for="name" class="block text-gray-300 mb-2">Name</label>
+              <input type="text" id="name" name="name" value="{{ auth()->user()->name }}" autofocus autocomplete="off" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              @error('name')
+                  <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+              @enderror
+            </div>
+            <div class="mb-4">
+              <label for="email" class="block text-gray-300 mb-2">Email</label>
+              <input type="text" id="email" name="email" value="{{ auth()->user()->email }}" autofocus autocomplete="off" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              @error('email')
+                  <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+              @enderror
+            </div>
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 mt-4 rounded">Update Profile</button>
+          </form>
+      </div>
+
+      <div id="passwordTab" class="tab-content hidden">
+        <h2 class="text-xl font-semibold mb-4">Change Password</h2>
+        <form action="{{ route('change.password') }}" method="POST">
           @csrf
-          <button type="submit" class="py-2 px-6 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
-            Logout
-          </button>
+          <div class="mb-4">
+            <label for="current_password" class="block text-gray-300">Current Password</label>
+            <input type="password" id="current_password" name="current_password" autofocus autocomplete="current-password" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            @error('current_password')
+              <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="mb-4">
+            <label for="new_password" class="block text-gray-300">New Password</label>
+            <input type="password" id="new_password" name="new_password" autofocus autocomplete="new-password" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            @error('new_password')
+              <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+            @enderror
+          </div>
+          <div class="mb-4">
+            <label for="new_password_confirmation" class="block text-gray-300">Confirm New Password</label>
+            <input type="password" name="new_password_confirmation" id="new_password_confirmation" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">Change Password</button>
         </form>
       </div>
     </div>
   </div>
+
+  <script>
+    function showTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => {
+        tab.classList.add('hidden');
+      });
+
+      document.getElementById(tabId).classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
