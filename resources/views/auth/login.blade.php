@@ -36,20 +36,24 @@
       <p class="mt-4 text-sm">Forgot your passsword? <a href="{{route("password.request")}}" class="text-blue-400 hover:underline">Reset now</a></p>
       <button type="submit" class="w-full py-3 mt-4 bg-blue-600 rounded-lg font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Login</button>
       
-        <!-- Social Login Buttons Row -->
-        <div class="flex justify-between mt-4">
-          <!-- Google Login Button -->
-          <a href="#" class="flex items-center justify-center w-1/2 py-3 bg-red-500 rounded-lg font-semibold text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 mr-2">
-            <i class="fa-brands fa-google fa-lg mr-3"></i>
-            Google
-          </a>
-  
-          <!-- GitHub Login Button -->
-          <a href="{{ url('/auth/github/redirect') }}" class="flex items-center justify-center w-1/2 py-3 bg-gray-600 rounded-lg font-semibold text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 mx-2">
-            <i class="fa-brands fa-github fa-lg mr-3"></i>
-            GitHub
-          </a>
-        </div>
+      <!-- Social Login Buttons Row -->
+      <div class="flex gap-4 mt-6">
+        <!-- Google Login Button -->
+        <a href="#" class="flex items-center justify-center flex-1 py-3 bg-red-500 rounded-lg font-semibold text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+          <i class="fa-brands fa-google fa-lg mr-2"></i>
+          Google
+        </a>
+        <!-- GitHub Login Button -->
+        <a href="{{ url('/auth/github/redirect') }}" class="flex items-center justify-center flex-1 py-3 bg-gray-700 rounded-lg font-semibold text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 transition">
+          <i class="fa-brands fa-github fa-lg mr-2"></i>
+          GitHub
+        </a>
+        <!-- Facebook Login Button -->
+        <a href="{{ route('facebook.redirect') }}" class="flex items-center justify-center flex-1 py-3 bg-blue-600 rounded-lg font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+          <i class="fa-brands fa-facebook-f fa-lg mr-2"></i>
+          Facebook
+        </a>
+      </div>
       <p class="mt-4 text-sm text-center">Don’t have an account? <a href="{{route("register")}}" class="text-blue-400 hover:underline">Register</a></p>
     </form>
   </div>
