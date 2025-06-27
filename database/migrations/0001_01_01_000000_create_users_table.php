@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('account_verified_at')->nullable();
             $table->string('password');
             $table->string('otp')->nullable();
+            $table->boolean('logout_other_devices')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -27,6 +27,7 @@ class UpdateProfileRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $id],
             'phone' => ['nullable', 'string', 'max:255', 'unique:users,phone,' . $id],
+            'logout_other_devices' => ['nullable', 'in:on,off'],
         ];
     }
 }

@@ -22,9 +22,9 @@ class ChangePasswordController extends Controller
             return back()->with('error', 'Current password is incorrect.');
         }
 
-        $user->update([
-            'password' => Hash::make($request->new_password)
-        ]);
+        $user->update(['password' => Hash::make($request->new_password)]);
+
+        Auth::login($user);
 
         return back()->with('success', 'Password changed successfully.');
     }
