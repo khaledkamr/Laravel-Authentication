@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\UpdateProfileController;
 use App\Http\Controllers\Auth\VerifyAccountController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'index');
@@ -19,11 +20,8 @@ Route::view('/register', 'auth.register')->name('register');
 Route::post('/register', RegisterController::class);
 Route::post('/login', LoginController::class);
 
-Route::get('/auth/github/redirect', [GithubAuthController::class, 'redirect'])->name('github.redirect');
-Route::get('/auth/github/callback', [GithubAuthController::class, 'callback'])->name('github.callback');
-
-Route::get('/auth/facebook/redirect', [facebookAuthController::class, 'redirect'])->name('facebook.redirect');
-Route::get('/auth/facebook/callback', [facebookAuthController::class, 'callback'])->name('facebook.callback');
+Route::get('/auth/{driver}/redirect', [SocialAuthController::class, 'redirect'])->name('social.redirect');
+Route::get('/auth/{driver}/callback', [SocialAuthController::class, 'callback'])->name('social.callback');
 
 Route::view('/forgot-password', 'auth.forgot-password')->name('password.request');
 Route::view('/reset-password/{token}', 'auth.reset-password')->name('reset.password');

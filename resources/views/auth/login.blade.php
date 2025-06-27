@@ -49,7 +49,7 @@
           GitHub
         </a>
         <!-- Facebook Login Button -->
-        <a href="{{ route('facebook.redirect') }}" class="flex items-center justify-center flex-1 py-3 bg-blue-600 rounded-lg font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
+        <a href="{{ url('/auth/facebook/redirect')}}" class="flex items-center justify-center flex-1 py-3 bg-blue-600 rounded-lg font-semibold text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition">
           <i class="fa-brands fa-facebook-f fa-lg mr-2"></i>
           Facebook
         </a>
