@@ -59,6 +59,13 @@
                   <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
               @enderror
             </div>
+            <div class="mb-4">
+              <label for="phone" class="block text-gray-300 mb-2">Phone</label>
+              <input type="text" id="phone" name="phone" value="{{ auth()->user()->phone }}" autofocus autocomplete="off" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+              @error('phone')
+                  <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+              @enderror
+            </div>
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 mt-4 rounded">Update Profile</button>
           </form>
       </div>

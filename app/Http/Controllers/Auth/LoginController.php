@@ -16,9 +16,10 @@ class LoginController extends Controller
      */
     public function __invoke(LoginRequest $request)
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->identifier)
+            ->orWhere('phone', $request->identifier)->first();
 
-        if(Hash::check($request->password, $user->password) === false) {
+        if(!$user || !Hash::check($request->password, $user->password)) {
             return back()->with('error', 'Invalid credentials. Please try again.');
         }
         
@@ -26,9 +27,7 @@ class LoginController extends Controller
             return back()->with('error', 'Please verify your account before logging in.');
         }
 
-        if(Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->intended('profile')->with('success', 'Welcome back!');
-        }
-        return back()->with('error', 'Invalid credentials. Please try again.');
+        Auth::login($user);
+        return redirect()->intended('/profile')->with('success', 'Welcome back!');
     }
 }
