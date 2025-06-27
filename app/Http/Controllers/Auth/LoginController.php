@@ -23,7 +23,7 @@ class LoginController extends Controller
             return back()->with('error', 'Invalid credentials. Please try again.');
         }
         
-        if(!$user->email_verified_at) {
+        if(!$user->account_verified_at) {
             return back()->with('error', 'Please verify your account before logging in.');
         }
 

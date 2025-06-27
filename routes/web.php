@@ -29,8 +29,11 @@ Route::view('/reset-password/{token}', 'auth.reset-password')->name('reset.passw
 Route::post('forgot-password', ForgotPasswordController::class)->name('password.email');
 Route::post('/reset-password', ResetPasswordController::class)->name('password.update');
 
-Route::view('/verify-email/{email}', 'auth.verify-email')->name('email.verify');
-Route::post('/verify-email', VerifyAccountController::class)->name('email.verify.post');
+Route::view('/verify-account/{identifier}', 'auth.verify-account')->name('account.verify');
+Route::post('/verify-account', [VerifyAccountController::class, 'verifyOtp'])->name('account.verify.post');
+Route::post('send-verification-otp', [VerifyAccountController::class, 'sendOtp'])->name('account.send.verification.otp');
+
+
 
 Route::middleware('auth')->group(function(){
   Route::view('/profile', 'auth.profile')->name('profile');
