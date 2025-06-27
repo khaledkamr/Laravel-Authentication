@@ -14,17 +14,16 @@
         <h2 class="text-3xl font-bold text-center">Register</h2>
         <form action="{{ route('register') }}" method="POST" class="space-y-4">
             @csrf
-            <div>
-                <label for="name" class="block mb-2 text-sm font-medium">Name</label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" autofocus
-                    autocomplete="name"
-                    class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                @error('name')
-                    <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
-                @enderror
-            </div>
-            <!-- Email and Phone in one line -->
             <div class="flex space-x-4">
+                <div class="w-1/2">
+                    <label for="name" class="block mb-2 text-sm font-medium">Name</label>
+                    <input type="text" id="name" name="name" value="{{ old('name') }}" autofocus
+                        autocomplete="name"
+                        class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    @error('name')
+                        <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="w-1/2">
                     <label for="email" class="block mb-2 text-sm font-medium">Email</label>
                     <input type="email" id="email" name="email" value="{{ old('email') }}" autocomplete="email"
@@ -33,6 +32,9 @@
                         <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                     @enderror
                 </div>
+            </div>
+
+            <div class="flex space-x-4">
                 <div class="w-1/2">
                     <label for="phone" class="block mb-2 text-sm font-medium">Phone</label>
                     <input type="text" id="phone" name="phone" value="{{ old('phone') }}" autocomplete="off"
@@ -40,6 +42,16 @@
                     @error('phone')
                         <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                     @enderror
+                </div>
+                <div class="w-1/2">
+                    <label for="role" class="block mb-2 text-sm font-medium">Role</label>
+                <select name="role" id="role" class="w-full p-3 rounded bg-gray-700 text-gray-100 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <option value="student" {{old('role') == 'student' ? 'selected' : ''}}>Student</option>
+                    <option value="teacher" {{old('role') == 'teacher' ? 'selected' : ''}}>Teacher</option>
+                </select>
+                @error('role')
+                    <span class="text-red-500 text-sm mt-1">{{$message}}</span>
+                @enderror
                 </div>
             </div>
             <!-- Password and Confirm Password in one line -->

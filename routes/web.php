@@ -40,4 +40,8 @@ Route::middleware('auth', 'auth.session')->group(function(){
   Route::put('/profile', UpdateProfileController::class)->name('update.profile');
   Route::post('/change-password', ChangePasswordController::class)->name('change.password');
   Route::post('/logout', LogoutController::class)->name('logout');
+
+  Route::view('/student', 'pages.student')->middleware('role:student');
+  Route::view('/teacher', 'pages.teacher')->middleware('role:teacher');
+  Route::view('/admin', 'pages.admin')->middleware('role:admin');
 });
