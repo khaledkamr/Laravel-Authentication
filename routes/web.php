@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Auth\ChangePasswordController;
 use App\Http\Controllers\Auth\facebookAuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Auth\UpdateProfileController;
 use App\Http\Controllers\Auth\VerifyAccountController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\Auth\SocialAuthController;
+use App\Http\Controllers\Admin\UsersController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'index');
@@ -41,7 +43,11 @@ Route::middleware('auth', 'auth.session')->group(function(){
   Route::post('/change-password', ChangePasswordController::class)->name('change.password');
   Route::post('/logout', LogoutController::class)->name('logout');
 
-  Route::view('/student', 'pages.student')->middleware('role:student');
-  Route::view('/teacher', 'pages.teacher')->middleware('role:teacher');
-  Route::view('/admin', 'pages.admin')->middleware('role:admin');
+  Route::view('/student', 'pages.student')->middleware('role:Student');
+  Route::view('/teacher', 'pages.teacher')->middleware('role:Teacher');
+  Route::view('/admin', 'pages.admin')->middleware('role:Admin');
 });
+
+Route::get('users', [UsersController::class, 'index'])->name('admin.users');
+Route::get('users/{user}/change-role', [UsersController::class, 'changeRole'])->name('admin.change-role');
+Route::resource('roles', RolesController::class);

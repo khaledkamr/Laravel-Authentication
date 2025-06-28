@@ -21,7 +21,6 @@ class RegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'role' => $request->role,
             'password' => bcrypt($request->password),
             'otp' => rand(100000, 999999),
         ]);

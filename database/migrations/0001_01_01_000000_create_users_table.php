@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable()->after('email');
             $table->timestamp('account_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['student', 'teacher', 'admin'])->default('student');
             $table->string('otp')->nullable();
             $table->boolean('logout_other_devices')->default(false);
             $table->rememberToken();
