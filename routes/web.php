@@ -43,11 +43,11 @@ Route::middleware('auth', 'auth.session')->group(function(){
   Route::post('/change-password', ChangePasswordController::class)->name('change.password');
   Route::post('/logout', LogoutController::class)->name('logout');
 
-  Route::view('/student', 'pages.student')->middleware('role:Student');
-  Route::view('/teacher', 'pages.teacher')->middleware('role:Teacher');
-  Route::view('/admin', 'pages.admin')->middleware('role:Admin');
+  Route::view('/student', 'pages.student')->middleware('permission:student');
+  Route::view('/teacher', 'pages.teacher')->middleware('permission:teacher');
+  Route::view('/admin', 'pages.admin')->middleware('permission:admin');
 });
 
-Route::get('users', [UsersController::class, 'index'])->name('admin.users');
+Route::get('users', [UsersController::class, 'index'])->name('admin.users')->middleware('permission:view_users');
 Route::get('users/{user}/change-role', [UsersController::class, 'changeRole'])->name('admin.change-role');
 Route::resource('roles', RolesController::class);

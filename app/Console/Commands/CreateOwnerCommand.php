@@ -2,35 +2,41 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Role;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 
-class CreateAdminCommand extends Command
+class CreateOwnerCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'create:admin';
+    protected $signature = 'create:owner';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new admin user';
+    protected $description = 'Create a new owner user';
 
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $name = $this->ask('Enter admin name');
-        $email = $this->ask('Enter admin email');
-        $password = $this->secret('Enter admin password');
-        $phone = $this->ask('Enter admin phone number (optional)', null);
+        if(!Role::where('name', 'owner')->first())
+        {
+            Artisan::call('db:seed'. ['--class' => 'RoleAndPermissionSeeder']);
+        }
+        $name = $this->ask('Enter owner name');
+        $email = $this->ask('Enter owner email');
+        $password = $this->secret('Enter owner password');
+        $phone = $this->ask('Enter owner phone number (optional)', null);
 
         $validator = Validator::make([
             'name' => $name,
@@ -56,11 +62,13 @@ class CreateAdminCommand extends Command
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
-            'role' => 'admin',
             'password' => bcrypt($password),
             'account_verified_at' => now(),
             'otp' => rand(100000, 999999),
         ]);
-        $this->info('Admin '. $name .' created successfully with email: '. $email);
+
+        $ownerRole = Role::where('name', 'owner')->first();
+        $user->roles()->attach($ownerRole->id);
+        $this->info('Owner '. $name .' created successfully with email: '. $email);
     }
 }

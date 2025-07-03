@@ -55,4 +55,13 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function permissions() {
+        return $this->roles()->with('permissions')->get()->pluck('permissions')->flatten()->pluck('name')->unique()->toArray();
+    }
+
+    public function hasPermission(string $permission): bool 
+    {
+        return in_array($permission, $this->permissions());
+    }
 }
